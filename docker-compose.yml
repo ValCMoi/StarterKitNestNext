@@ -1,0 +1,70 @@
+version: '3'
+
+networks:
+  web:
+    ipam:
+      config:
+        - subnet: ${WEB_NETWORK}
+
+services:
+  db:
+    networks:
+      web:
+          ipv4_address: ${IP_MYSQL}
+    image: mysql:${MYSQL_VERSION}
+    container_name: MYSQL-DATABASE-${PROJECT_NAME}
+    hostname: MYSQL-DATABASE-${PROJECT_NAME}
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_USER_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "${MYSQL_PORT_EXPOSE}:3306"
+
+  phpmyadmin:
+    networks:
+      web:
+          ipv4_address: ${IP_PMA}
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    container_name: PHP-MY-ADMIN-${PROJECT_NAME}
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    ports:
+      - ${MY_ADMIN_PORT_EXPOSE}:80
+  
+  api:
+    networks:
+      web:
+          ipv4_address: ${IP_NEST}
+    depends_on:
+      - phpmyadmin
+    build:
+      dockerfile: ./Nest.dockerfile
+      context: .
+    volumes:
+      - ./backend:/usr/src/app/
+    command: npm run start:dev
+    ports:
+      - ${NEST_PORT_EXPOSE}:${NEST_PORT_INIT}
+  
+  front:
+    networks:
+      web:
+          ipv4_address: ${IP_NEXT}
+    depends_on:
+      - api
+    build:
+      dockerfile: ./Next.dockerfile
+      context: .
+    volumes:
+      - ./frontend:/usr/src/app/
+    command: npm run dev
+    ports:
+      - ${NEXT_PORT_EXPOSE}:${NEXT_PORT_INIT}

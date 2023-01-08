@@ -1,0 +1,5 @@
+.env
+node_modules
+SPARTACUS/Result/src/*
+backend/dist/*
+backend/dist/tsconfig.build.tsbuildinfo

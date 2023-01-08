@@ -1,0 +1,3 @@
+FROM node:18
+WORKDIR /usr/src/app
+EXPOSE ${NEST_PORT_INIT}
