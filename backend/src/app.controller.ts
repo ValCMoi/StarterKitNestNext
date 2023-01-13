@@ -3,7 +3,7 @@ import { Post, Request, UseGuards } from '@nestjs/common/decorators';
 import { AuthGuard } from '@nestjs/passport/dist';
 import { AppService } from './app.service';
 import { AuthService } from './auth/auth.service';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Controller()
 export class AppController {

@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Roles } from 'src/role/role.decorator';
+import { Role } from 'src/role/enums/role.enum';
 
 @Controller('user')
 export class UserController {
@@ -13,6 +15,7 @@ export class UserController {
   }
 
   @Get()
+  @Roles(Role.Admin)
   findAll() {
     return this.userService.findAll();
   }
