@@ -17,7 +17,13 @@ export class UserService {
   ){}
 
   create(createUserDto: CreateUserDto): Observable<User> | undefined {
-    const dataToInsert:CreateUserDto = {email:createUserDto.email, password: crypt.encrypt(createUserDto.password)}
+    const dataToInsert:CreateUserDto 
+      = 
+        {
+          email:createUserDto.email, 
+          password: crypt.encrypt(createUserDto.password),
+          role: createUserDto.role
+        }
     return  from(this.userRepository.save(dataToInsert));
   }
 
