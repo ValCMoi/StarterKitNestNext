@@ -12,6 +12,10 @@ export class User {
     @Column({nullable: false})
     readonly password: string
 
-    @Column()
+    @Column({
+        type:"enum",
+        enum: Role,
+        default: Role.User
+    })
     role: Role
 }
