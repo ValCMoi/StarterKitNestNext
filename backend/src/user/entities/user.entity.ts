@@ -18,4 +18,7 @@ export class User {
         default: Role.User
     })
     role: Role
+
+    @Column({default:""})
+    refreshToken: string
 }

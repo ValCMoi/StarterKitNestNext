@@ -24,6 +24,11 @@ export class AppController {
     return this.authService.login(req.user);
   }
 
+  @Post('auth/logout')
+  async logout(@Request() req) {
+    return this.authService.logout(req.user);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {

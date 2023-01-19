@@ -32,6 +32,7 @@
     "@nestjs/typeorm": "^9.0.1",
     "@types/passport-jwt": "^3.0.8",
     "@types/passport-local": "^1.0.34",
+    "argon2": "^0.30.3",
     "bcrypt": "^5.1.0",
     "crypto": "^1.0.1",
     "cryptojs": "^2.5.3",
